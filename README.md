@@ -1,0 +1,4 @@
+# Formler-og-resultater-fra-Matematikk-2
+[Norwegian] Oppsummering av de viktigste resultatene i TMA 4105 Matematikk 2
+Dette dokumentet er veiledende, og inneholder formler og resultater fra kurset TMA4105 som kan være nyttig å kunne til eksamen.
+Samlingen dekker ikke alle resultatene i faget, men de aller fleste av de viktige. Formler brukes på eget ansvar, og spørsmål om utledelse av disse resultatene kan rettes til henrtk@stud.ntnu.no, eventuelt forum-plattformen til kurset. Der det gjør seg gjeldende antas funksjoner deriverbare minst antall ganger derivert i formelen. Jeg ber også leseren å melde ifra dersom noe mangler eller er feil. Sist oppdatert 2. mai 2021. Det foretrekkes at dette ikke deles uten samtykke fra forfatter. Vektorer markeres med \textbf{tykk skrift}, og gitt en slik vektor vil det samme symbolet i "tynn skrift" være vektorens absoluttverdi. Eksempel: $\textbf{v}(t)$ er fartsvektoren, med fartstørrelse $v(t)$. 
