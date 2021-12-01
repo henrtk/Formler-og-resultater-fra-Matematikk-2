@@ -1,0 +1,445 @@
+\documentclass[fleqn,12pt]{wlscirep}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{siunitx}
+\usepackage{amsmath}
+\usepackage{esint}
+\usepackage{mathrsfs}
+%%shameless paste fra Toftevaags formelsamling for Fysikk 2, fordi formattering er vanskelig  :^( 
+\title{Formelsamling TMA4105 Matematikk 2}
+
+\author[1, 2]{Henrik Tidemann Kaarbø}
+\affil[1]{Norges Teknisk-Naturvitenskapelige Universitet}
+\affil[2]{Timini, linjeforeningen for teknologistudiet nanoteknologi}
+
+\begin{document}
+
+\flushbottom
+\maketitle
+\thispagestyle{empty}
+\vskip 20pt
+\noindent {\Large{\textbf{Ansvarsfraskrivelse}}}\vskip 2pt
+\noindent Dette dokumentet er veiledende, og inneholder formler og resultater fra kurset TMA4105 som kan være nyttig å kunne til eksamen. Samlingen dekker ikke \textit{alle} resultatene i faget, men de aller fleste av de viktige. Formler brukes på eget ansvar, og spørsmål om utledelse av disse resultatene kan rettes til henrtk@stud.ntnu.no, eventuelt forum-plattformen til kurset. Der det gjør seg gjeldende antas funksjoner deriverbare minst antall ganger derivert i formelen. Jeg ber også leseren å melde ifra dersom noe mangler eller er feil. Sist oppdatert 2. mai 2021. Det foretrekkes at dette ikke deles uten samtykke fra forfatter. Vektorer markeres med \textbf{tykk skrift}, og gitt en slik vektor vil det samme symbolet i "tynn skrift" være vektorens absoluttverdi. Eksempel: $\textbf{v}(t)$ er fartsvektoren, med fartstørrelse $v(t)$. 
+\tableofcontents
+
+\section{Vanlige koordinattransformasjoner}
+\subsection{Endring av areal/integralenheter ved koordinattransformasjoner}
+\vskip 5pt
+Jakobideterminanten:
+\begin{equation}
+    J = \frac{\partial(a,\,b,\, ... , \, n)}{\partial(u,\, v,\, ...,\, m)} = 
+    \begin{vmatrix}
+    \partial a/\partial u & \partial a / \partial v & \cdot \cdot\cdot & \partial a / \partial m \\
+    \partial b/\partial u & \partial b / \partial v & \cdot\cdot\cdot& \partial b / \partial m\\
+    \vdots &\vdots &\ddots &\vdots\\
+    \partial n/\partial u & \partial n / \partial v &\cdot\cdot\cdot & \partial n / \partial m
+    \end{vmatrix} = \left(\frac{\partial(u,\, v,\, ...,\, m)}{\partial(a,\,b,\, ... , \, n)}\right)^{-1}
+\end{equation}\vskip10pt
+\noindent
+I to dimensjoner gjelder: 
+\begin{equation}
+    dA = dx\,dy = \left|\frac{\partial(x,\,y)}{\partial(u,\, v)}\right|du\,dv
+\end{equation}\vskip10pt
+\noindent
+Generelt gjelder:
+\begin{equation}
+    dx\,dy\,dz\, ... \, dn = \left|\frac{\partial(x,\,y,\, z,\, ... , \, n)}{\partial(u,\, v,\, w,\, ...,\, m)}\right| du\,dv\,dw\,...\,dm
+\end{equation} \vskip10pt
+\noindent \textbf{Eksempel} Gitt en koordinatendring i to dimensjoner fra området $D$ i xy-planet til $S$ i uv-planet ved den injektive transformasjonen $u = u(x,y),\, v = v(x,y) \Longrightarrow g(u(x,y),v(x,y)) = f(x,y)$ (det er den samme funksjonen, men vi bytter variabler)
+\begin{equation}
+ \iint_D f(x, y)\,\, dx\, dy  = \iint_S g(u,v) \left|\frac{\partial(x,\,y)}{\partial(u,\, v)}\right|du\,dv = \iint_S g(u,v) \left|\frac{\partial(u,\, v)}{\partial(x,\,y)}\right|^{-1}du\,dv
+\end{equation}
+Helt tilsvarende i n dimensjoner.
+
+\subsection{Polarkoordinater}
+Med $ 0<r<\infty$ og $ 0\leq \theta < 2\pi$,
+\begin{align}
+    &\begin{cases}
+    r^2 = x^2 + y^2\\
+    x = r \cos{\theta}\\
+    y = r \sin{\theta}
+    \end{cases}
+    &\text{med Jakobi-determinant } \left|\frac{\partial(x,\,y)}{\partial(r,\, \theta)}\right| = r
+\end{align}
+\subsection{Sylinderkoordinater}
+Nøyaktig det samme som over, men i tre dimensjoner med 
+\begin{equation}
+    z = z, \, z\in \mathbb{R}
+\end{equation}
+(lol)
+\subsection{Kulekoordinater}
+Med $0 < \rho\leq \infty,
+   \, \ 0<\phi < \pi \,
+   $ og $ \ 0\leq \theta \leq 2\pi$
+    \begin{align}
+    &\begin{cases}
+    \rho^2 = x^2 + y^2+z^2\\
+    x = \rho \cos{\theta}\sin{\phi}\\
+    y = \rho  \sin{\theta}\sin{\phi}\\
+    z = \rho cos{\phi}
+    \end{cases}
+    &\text{ med Jakobi-determinant } \left|\frac{\partial(x,\,y,\,z)}{\partial(r,\,\phi,\, \theta)}\right| = \rho^2 \sin{\phi}
+\end{align}
+\section{Grenseverdier i flere dimensjoner}
+Å vise at en grense eksisterer er ikke nødvendigvis lett, men her er definisjonen (i to dimensjoner, men ved flere dimensjoner er det bare å legge til flere koordinater):
+\begin{equation}
+    \lim_{(x,y)\to (a,b)} f(x,y) = L,
+\end{equation}
+dersom
+\begin{align*}
+    &(i)\text{ for hver $\rho$ > 0 eksisterer det minst ett punkt } (x,y)\in D_f \\ &\quad\text{ som oppfyller } 0 < |(x,y)-(a,b)| < \rho.\\ \\
+    &(ii) \text{ for hver $\epsilon > 0$ eksisterer det en $\delta > 0$ slik at dersom } (x,y) \in D_f\\ &\text{ og } 0 < |(x,y)-(a,b)| < \delta \text{ så er }|f(x,y) - L| < \epsilon.
+\end{align*}
+\noindent En funksjon er kontinuerlig dersom grenseverdien \begin{equation}
+    \lim_{(x,y)\to (a,b)} f(x,y) = L,
+\end{equation} 
+er entydig.
+\subsection{Diskontinuitet}
+Å vise diskontiuitet handler bare om å finne moteksempel på entydigheten til grenseverdien. Disse metodene anngår å bruke at man kan nærme seg punktet fra \textit{alle} retninger. 
+\subsubsection{Modisfiserte polarkoordinater}
+Gitt 
+\begin{equation}
+    \lim_{(x,y)\to (a,b)} f(x,y),
+\end{equation} 
+transformert til (modifiserte) polarkoordinater, slik at
+\begin{align}
+        \begin{cases}
+        x = a + r \cos{\theta}\\
+        y = b + r \sin{\theta}
+        \end{cases}
+        \Longrightarrow \lim_{(x,y)\to (a,b)} f(x,y) = \lim_{r \to 0^+} f(r,\theta).
+\end{align}
+Dersom grenseverdien eksisterer, men er avhengig av $\theta$, er ikke grenseverdien entydig, og funksjonen diskontinuerlig. Dersom den ikke eksisterer er funksjonen diskontinuerlig. Om den eksisterer og er lik en tallverdi, er funksjonen kontinuerlig i punktet.
+\subsubsection{Langs forskjellige y = g(x)}
+Dersom punktet $(a,b)$ ligger på de forskjellige kurvene $y_1 = g_1(x)$, $y_2 = g_2(x)$, ..., $y_n = g_n(x)$ gjelder følgende dersom funksjonen er kontinuerlig:
+\begin{equation}
+    \lim_{(x,y)\to (a,b)} f(x,y) = \lim_{x\to a} f(x,g_1(x)) = \lim_{x\to a} f(x,g_2(x)) = ... = \lim_{x\to a} f(x,g_n(x))
+\end{equation}
+Dersom likheten ikke stemmer for én $y=g_m(x)$, må $f(x,y)$ være diskontinuerlig i punktet.
+\section{Implisitt funksjonsteorem}
+La $\textbf{x} = (x_1,x_2,...,x_n)$ og $f(\textbf{x},y) : D  \to \mathbb{R}$, $ D \subset  \mathbb{R}^{n+1}$. Med antagelsene $(\textbf{a},b)\in D $ og $\frac{\partial f}{\partial y}(\textbf{a},b) \neq 0$, gjelder følgende:
+\begin{align}
+    \exists &g(\textbf{x}): A \to \mathbb{R},\, A =\{\textbf{x} \in \mathbb{R}^n :|\textbf{x}-\textbf{a}| < \rho \}, \text{ der g er deriverbar og  } g(\textbf{a}) = b \text{ med egenskapen}\notag\\
+    &f(\textbf{x},g(\textbf{x})) = 0 \, \text{ og }\\  &\frac{\partial g}{\partial x_i} = -\frac{\frac{\partial f}{\partial x_i}(\textbf{x},g(\textbf{x}))}{\frac{\partial f}{\partial y}(\textbf{x},g(\textbf{x}))}
+\end{align}
+I praksis sier dette teoremet at gitt en funksjon $f(x,y)$, så kan man finne en implisitt funksjon for hver enkelt-variabel som funksjon av de andre variablene til $f$, gitt en spesifikk funksjonsverdi (her: 0).
+Teoremet forsikrer også at disse implisitte funksjonene er deriverbare. \textit{Dette teoremet har altså som konsekvens at implisitt derivasjon fungerer, gitt antagelsene til teoremet stemmer.}
+\section{Optimalisering i flere dimensjoner}
+\subsection{Gradienten}
+La $f: D \to \mathbb{R}, \, D \subset \mathbb{R}^n$ (f er en potensialfunksjon). 
+\begin{equation}
+ \nabla f = \left(\frac{\partial f}{\partial x},\frac{\partial f}{\partial y},...,\frac{\partial f}{\partial n}\right),
+\end{equation}
+\subsection{Den retningsderiverte og enhetsvektorer}
+La $f : D \to \mathbb{R}, \, D \subset \mathbb{R}^n$ og $\textbf{u} \in \mathbb{R}^n$. Den retningsderiverte gir vekstraten til en funksjon $f$ i en gitt vektorbestemt enhetsretning (dvs. vektorens absoluttverdi er 1) i $\mathbb{R}^n$.\newline En enhetsvektor $\hat{\textbf{u}}$ i retningen til vektoren $\textbf{u}$ kan bestemmes ved 
+\begin{equation}
+    \hat{\textbf{u}} = \frac{\textbf{u}}{|\textbf{u}|}
+\end{equation}
+Den retningsderiverte gis ved 
+\begin{equation}
+    D_{\textbf{u}}f(a,\,b,\,...,\,n) = \hat{\textbf{u}}\cdot \nabla f(a,b,\,...,\,n)
+\end{equation}
+\subsection{Nivåkurver}
+Nivåkurver er projeksjoner av en funksjon med høyere dimensjon ned i et rom av lavere dimensjon. Projeksjonen representeres ved å tegne skjæringskurvene man får mellom funksjonen og parallelle plan (eller rom) med "høyde" c. Nivåkurver i planet blir ordinære kurver, mens de i rommet blir flater. Dersom funksjonen $f(x,y,z)$ er glatt, gis nivåkurver ved ligningen 
+\begin{align*}
+    &f(x,y,z) = c & \text{(i rommet)}\\
+    &f(x,y) = c & \text{(i planet)}
+\end{align*}
+På nivåkurver er $\nabla f$ alltid normal på kurven (eller flaten), som er nyttig for å finne normalvektorer.
+\subsection{Tangentplan}
+Tangentplanet til en funksjon $z = f(x,y)$ i punktet $(a,b, f(a,b))$ kan gis ved ligningen
+\begin{equation}
+    z = f(a,b) + \frac{\partial f}{\partial x}(a,b)(x-a) + \frac{\partial f}{\partial y} (a,b)(y-b)
+\end{equation}
+
+\subsection{Schwarz' teorem}
+\begin{equation}
+    \frac{\partial^2 f}{\partial x \partial y} = \frac{\partial^2 f}{\partial y \partial x}
+\end{equation}
+\subsection{Ekstremalpunkter}
+Ekstremalpunktene til en funksjon $f$ i n dimensjoner gis ved å løse 
+\begin{equation}
+    \nabla f = \textbf{0}
+\end{equation}
+\subsection{Andrederiverttesten i to dimensjoner (bestemmelse av topp/bunnpunkt)}
+For å bestemme typen av ekstremalpunkter til en potensialfunksjon $f(x,y)$ trenger man følgende informasjon
+\begin{align}
+    &\mathcal{D} = 
+    \begin{vmatrix}
+    \frac{\partial^2 f}{\partial x ^2} & \frac{\partial^2 f }{\partial x \partial y}\\
+    \frac{\partial^2 f}{\partial y \partial x} & \frac{\partial^2 f}{\partial y^2}
+    \end{vmatrix} = \frac{\partial^2 f}{\partial x^2}\frac{\partial^2 f}{\partial y^2} - \left(\frac{\partial^2 f}{\partial x \partial y}\right)^{2}\\ &\mathcal{D} < 0 \qquad \text{gir sadelpunkt} \\ &\mathcal{D} > 0 \qquad\text{gir topp eller bunn, og}\\
+    &\frac{\partial^2 f}{\partial x^2} > 0 \quad \text{gir bunn,} \qquad \frac{\partial^2 f}{\partial x^2} < 0\quad \text{gir topp}
+\end{align}
+Dersom $\mathcal{D} = 0$ i et punkt, har man ingen slik informasjon. Da kan man f. eks. sjekke funksjonsverdien i punktet og sammenligne. Matrisen til determinanten kalles forøvrig Hessianen, og kan generaliseres til $n$ dimensjoner ved å heller se på egenverdiene til matrisen, gitt at matrisen er invertibel i punktet. Dersom alle er positive i punktet er det et lokalt minima, dersom alle er negative er det et lokalt maksima, og om de har ulike fortegn er det et sadelpunkt.  
+\subsection{Lagrangemultiplikatorer}
+De overnevnte metodene finner bare noen kandidater til globale minimums- og maksimumspunkter. For å finne de globale, må man sjekke \textit{singulære punkter} og \textit{randpunkter}. For å finne kandidater på randen til en funksjon, bruker man Lagrangemultiplikatorer. Gitt et optimaliseringsproblem på en funksjon $f$ med restriksjon $g = 0$, og anta $\nabla g \neq 0$ kan man finne minima/maksima-kandidater ved å løse 
+\begin{equation}
+    \begin{cases}
+    \nabla f = \lambda \nabla g \\
+    g = 0
+    \end{cases}
+\end{equation}
+Dette tilsvarer å finne ekstremalverdiene til funksjonen kalt \textit{Lagrangianen}, gitt ved \begin{equation}
+    \mathcal{L}(x,\,y,\,z,\,...,\,n,\,\lambda) = f(x,\, y,\, z,\, ...,\,n) -\lambda g(x,\, y,\, z,\, ...,\,n) 
+\end{equation}
+Om det i tillegg til $g = 0$ er flere restriksjoner gitt ved f. eks. funksjonen $h = 0$ kan man legge på et ledd til i lagrangianen, men med en annen faktor $\gamma$. Da må man finne ekstremalpunktene til 
+\begin{equation}
+    \mathcal{L}(x,\,y,\,z,\,...,\,n,\,\lambda,\,\gamma) = f(x,\, y,\, z,\, ...,\,n) -\lambda g(x,\, y,\, z,\, ...,\,n) -\gamma h(x,\, y,\, z,\, ...,\,n)
+\end{equation}
+NB! Dersom man i ligningssettet dividerer med en variabel $x$ for å finne en løsning, så antar man at $x\neq 0$. Da må man også sjekke punkter gitt ved $x = 0$ for å ikke miste løsninger.
+\section{Kurver}
+\subsection{Parametrisering av kurver}
+En kurve $\textbf{r} \in \mathbb{R}^n$ kan (som oftest) parametriseres på mange forskjellige måter slik at 
+\begin{equation}
+ \textbf{r(t)} = x(t)\textbf{i} + y(t)\textbf{j} + z(t)\textbf{k} + ... + h(t)\textbf{n},
+\end{equation}
+så lenge alle funksjoner av t er slik at de samsvarer med koordinatene til r i hver posisjon.
+En parametrisert kurve er orienterbar, det vil si den har en retning, som har noe å si for tangentvektoren. Følgelig har da orienteringen noe å si i utregninger som involverer denne. 
+\subsection{Stigningstall til parametriserte kurver}
+\begin{equation}
+    \begin{cases}
+    x = f(t)\\ 
+    y = g(t)
+    \end{cases}
+    \Longrightarrow \quad \frac{dy}{dx} = \frac{g'(t)}{f'(t)} \text{  (når } f'(t) \neq 0),\,\quad \frac{dx}{dy} = \frac{f'(t)}{g'(t)} \text{  (når } g'(t) \neq 0) \label{parametrisert}
+\end{equation}
+\subsection{Buelengde av en parametrisert kurve}
+Gitt en parametrisering av $\textbf{r}$ som i \ref{parametrisert}, har man:
+\begin{equation}
+s = \int_{a}^{b} ds = \int_{t=a}^{t=b} \sqrt{\left(\frac{ dx}{dt}\right)^2 +\left(\frac{ dy}{dt}\right)^2+...+\left(\frac{dh}{dt}\right)^2} dt   
+\end{equation}
+\subsubsection{Spesialtilfelle}
+Gitt polarkoordinater, to dimensjoner og $r = f(\theta)$
+\begin{equation}
+s = \int_{a}^{b} ds = \int_{\theta_a}^{\theta_b} \sqrt{f(\theta)^2 +f'(\theta)^2} \, d\theta   
+\end{equation}
+\subsection{Overflateareal av omdreiningslegemet til en parametrisert kurve (2d)}
+Rotasjon om x-aksen:
+\begin{equation}
+S_{\textbf{r},x-akse} = 2\pi\int_{a}^{b}|y|\, ds = 2\pi\int_{t=a}^{t=b}|y(t)| \sqrt{\left(\frac{ dx}{dt}\right)^2 +\left(\frac{ dy}{dt}\right)^2} dt   
+\end{equation}
+Rotasjon om y-aksen:
+\begin{equation}
+S_{\textbf{r},y-akse} = 2\pi\int_{a}^{b}|x|\, ds = 2\pi\int_{t=a}^{t=b}|x(t)| \sqrt{\left(\frac{ dx}{dt}\right)^2 +\left(\frac{ dy}{dt}\right)^2} dt   
+\end{equation}
+\subsection{Buelengdeparametrisering av en kurve}
+Buelengden kan også parametriseres ved valg av et arbitrær startverdi $t_0$, slik at
+\begin{equation}
+s(t) = \int_{t_0}^{t} ds = \int_{t_0}^{t} \sqrt{\left(\frac{dx}{d\tau}\right)^2 +\left(\frac{ dy}{d\tau}\right)^2+...+\left(\frac{dh}{d\tau}\right)^2} d\tau = \int_{t_0}^{t}\left|\frac{d\textbf{r}(\tau)}{d\tau}\right| d\tau  
+\end{equation}
+Kurven kan da parametriseres ved å snu uttrykket for å finne $t(s)$, som kan settes inn i kurveuttrykket for å få $\textbf{r}(t) = \textbf{r}(t(s)) = \textbf{r}(s)$.
+\subsection{Tangentvektor, normalvektor, binormal}
+Tangentvektoren $\hat{\textbf{T}}$ til en kurve $\textbf{r}(t)$ eller \textbf{r}(s) gis ved henholdsvis
+\begin{equation}
+    \qquad \qquad \qquad \qquad \quad \hat{\textbf{T}}(t) = \frac{d\textbf{r}/dt}{\left|d\textbf{r}/dt\right|}\qquad\qquad\qquad \hat{\textbf{T}}(s) = \frac{d\textbf{r}}{ds} 
+\end{equation}
+Normalvektoren $\hat{\textbf{N}}$ gis henholdsvis 
+\begin{equation}
+    \qquad \qquad \qquad \qquad \quad \hat{\textbf{N}}(t) = \frac{d\hat{\textbf{T}}(t)/dt}{\left|d\hat{\textbf{T}}(t)/dt\right|}\qquad\qquad\: \ \hat{\textbf{N}} (s) = \frac{d\hat{\textbf{T}}(s)/ds}{\left|d\hat{\textbf{T}}(s)/ds\right|}
+\end{equation}
+Binormalen $\hat{\textbf{B}}$ er gitt ved henholdsvis
+\begin{equation}
+    \qquad \qquad \qquad \qquad \quad \hat{\textbf{B}}(t) = \hat{\textbf{T}}(t)\times \hat{\textbf{N}}(t)\qquad\qquad\: \ \hat{\textbf{B}} (s) = \hat{\textbf{T}}(s) \times \hat{\textbf{N}} (s)
+\end{equation}
+\subsection{Krumning, smygsirkelradius og torsjon}
+Krumningen $\kappa$ er gitt ved
+\begin{equation}
+   \qquad \qquad \qquad \qquad \quad \kappa(t) =  \left|\frac{d\hat{\textbf{T}}(t)/dt}{d\textbf{r}(t)/dt}\right| \qquad\qquad\: \ \ \kappa (s) = \left|\frac{d \hat{\textbf{T}}(s)}{ds}\right|
+\end{equation}
+Smygsirkelradiusen $R$ er enkelt gitt ved 
+\begin{equation}
+  \qquad \qquad \qquad \qquad \quad R(t) = \frac{1}{\kappa(t)} \qquad\qquad\qquad \quad \ \ R(s) = \frac{1}{\kappa(s)}
+\end{equation}
+Torsjonen $\tau$ er gitt ved henholdsvis ligningene
+\begin{equation}
+    \qquad \qquad \qquad \qquad \quad \frac{d\hat{\textbf{B}}(t)}{dt} = -\tau (t)\, |\textbf{r}'(t)|\,\hat{\textbf{N}} (t)\qquad \frac{d\hat{\textbf{B}}(s)}{ds} = -\tau(s) \hat{\textbf{N}}(s)
+\end{equation}
+\subsection{Snarveier}
+Noen av disse størrelsene har enda litt flere, kanskje greiere snarveier for utregning. Det kan vises at: 
+\begin{align}
+    \qquad\qquad \qquad \quad \:\hat{\textbf{T}} = \frac{\textbf{v}}{v} \qquad\qquad &\hat{\textbf{B}} = \frac{\textbf{v}\times\textbf{a}}{|\textbf{v}\times\textbf{a}|} \qquad \qquad \kappa =  \frac{|\textbf{v}\times\textbf{a}|}{v^3}\\ \notag \\
+    & \tau = \frac{(\textbf{v}\times\textbf{a})\cdot d\textbf{a}/dt}{|\textbf{v}\times\textbf{a}|^2}
+\end{align}
+\section{Integralgeometri}
+\subsection{Linjeintegraler}
+Gitt en parametrisert kurve som i \ref{parametrisert} så er linjeintegralet over en gitt funksjon $f(x,y,z)$ gitt ved 
+\begin{equation}
+    \int_C f(x,y,z) \, ds = \int_{t_0}^{t_1} f(\textbf{r}(t)) \left| \frac{d\textbf{r}}{dt} \right| dt \label{eq:line}
+\end{equation}
+\subsection{Volumintegraler}
+Volumet av et stykkevis kontinuerlig $xyz$-enkelt område $D$ er gitt ved
+\begin{equation}
+    V = \iiint_D dV 
+\end{equation}
+Der området $D$ begrenses av eksempelvis $z_1(x,y)\leq z \leq z_2(x,y)$, $y_1(x) \leq y \leq y_2(x)$ og $a\leq x \leq b$. \textit{Fubinis teorem} lar oss bytte om på integrasjonsrekkefølgen om man kan finne en annen begrensing av koordinatvariablene, gitt de samme ulikhetene.
+\subsection{Masse}
+Massen til et innesluttet $xyz$-område $D$ med massetetthetsfunksjon $\delta (x,y,z)$ er gitt ved 
+\begin{equation}
+    M = \iiint_D \, dm = \iiint_D \delta \, dV \label{eq:mass}
+\end{equation}
+Tilsvarende i én og to dimensjoner.
+\subsection{Momenter og massesenter}
+Gitt samme forhold som i \ref{eq:mass}, er et koordinats moment, eks $\overline x$, gitt ved
+\begin{equation}
+    \overline{x} = \frac{1}{M} \iiint_D \,x\,\ dm= \frac{1}{M} \iiint_D  \ x\, \ \delta(x,y,z)\, dV
+\end{equation}
+Tilsvarende for samtlige koordinater.
+Massesenteret ligger i punktet \begin{equation}
+    P_s = (\overline x,\, \overline y,\, \overline z)
+\end{equation}
+med tilsvarende for samtlige dimensjoner, og kan til og med brukes i linjeintegraler som i \ref{eq:line}.
+\section{Flater}
+\subsection{Parametrisering av flater}
+På samme måte som kurver kan man parametrisere flater, men denne gangen med to variable. Generelt kan man skrive en parametrisert flate som
+\begin{equation}
+    \textbf{r}(u,v) = x(u,v)\textbf{i} + y(u,v)\textbf{j} + z(u,v)\textbf{k} + ... + h(u,v)\textbf{n},
+\end{equation}
+for punktene på en flate. Som med kurver kan flater også være orienterbare, men ikke alltid (eksempel Möbius' ring). Om flaten er orienterbar må man gjøre et valg for hva som er flatens positive side, som blir retningen normalvektoren skal peke.
+\subsection{Overflatelementer og normalvektor}
+Gitt en parametrisert flate $\textbf{r}(u,v)$, er et overflateelement i tre dimensjoner (sammenlignbart med Jacobideterminanten) gitt ved:
+\begin{equation}
+    dS = \left|\frac{\partial \textbf{r}}{\partial u}\times \frac{\partial \textbf{r}}{\partial v}\right|\,du\,dv
+\end{equation}
+Normalvektoren til en parametrisert flate tilsvarer følgende, der $\pm$ avhenger av valgt orientering
+\begin{equation}
+    \hat{\textbf{N}} = \pm \frac{\frac{\partial \textbf{r}}{\partial u}\times \frac{\partial \textbf{r}}{\partial v}}{\left|\frac{\partial \textbf{r}}{\partial u}\times \frac{\partial \textbf{r}}{\partial v}\right|}
+\end{equation}
+\subsection{Overflateareal}
+Overflatearealet til en parametrisert flate innenfor et begrenset område på flaten i $uv$-planet, $S$, kan finnes ved (ikke overraskende):
+\begin{equation}
+    \iint_S \,dS 
+\end{equation}
+\subsection{Overflatemasse}
+Gitt en funksjon $\delta$ som gir tettheten av noe, f. eks. massen på flaten i et gitt punkt, kan man finne den totale mengden (totalmassen) i et begrenset område i $uv$-planet, $S$, ved
+\begin{equation}
+    \iint_S \delta(x,y,z)\, dS =  \iint_S \delta(\textbf{r}(u,v)) \left|\frac{\partial \textbf{r}}{\partial u}\times \frac{\partial \textbf{r}}{\partial v}\right|\,du\,dv
+\end{equation}
+\subsection{Fluks}
+Fluksen (total gjennomstrømning) til et vektorfelt $\textbf{F}$ gjennom en flate $S$ er gitt ved
+\begin{equation}
+    \iint_S \textbf{F}\cdot\hat{\textbf{N}}\, dS = \iint_S \textbf{F}\cdot d\textbf{S} = \iint_S \textbf{F} \cdot \left(\frac{\partial \textbf{r}}{\partial u}\times \frac{\partial \textbf{r}}{\partial v}\right) \,du\,dv
+\end{equation}
+\subsection{Spesialtilfeller}
+Dersom flaten $S$ er beskrevet av $z = f(x,y)$ forenkles det hele stort
+\begin{equation}
+    \textbf{r}(x,y) = (x,y,f(x,y)) \Longrightarrow \frac{\partial \textbf{r}}{\partial x}\times \frac{\partial \textbf{r}}{\partial y} = \left(-\frac{\partial f}{\partial x},-\frac{\partial f}{\partial y}, 1\right) \label{z=fxy}
+\end{equation}
+Mer generelt, dersom $S$ er en orientert, glatt flate i rommet gitt ved en ligning $G(a,b,c) = 0$ med 1-til-1-projeksjon til et koordinatplan $c=0$ med normal langs $c$-aksen , så gjelder:
+\begin{equation}
+    d\textbf{S} = \pm \frac{\nabla G}{\partial G/\partial c}\,da\, \ db, \quad dS = \left|\frac{\nabla G}{\partial G/\partial c}\right|\,da \ \,db 
+\end{equation}
+Dette planet kan f. eks. være $xy$-planet (som har normal langs $z$-aksen), med flaten uttrykt implisitt som $z= f(x,y)$, og da får man nøyaktig det samme som i \ref{z=fxy}. Det som skjer her, er at vi betrakter flaten som en nivåflate for funksjonen $G = z-f(x,y)$. Følgelig må normalvektoren i et punkt på nivåflaten være $\nabla G$.
+\section{Vektorkalkulus}
+\subsection{Linjeintegral over vektorfelt}
+Linjeintegralet til en kurve $C$ parametrisert som $\textbf{r}(t)$ over et vektorfelt $\textbf{F}$ gis ved 
+\begin{equation}
+    \int_C \textbf{F}\cdot d\textbf{r} = \int_C \textbf{F}\cdot \hat{\textbf{T}} ds = \int_C F_1 dx + F_2 dy + F_3 dz
+\end{equation}
+Man kan finne $d\textbf{r}$ ved å gjøre følgende operasjoner, uavhengig av parameter (kan være den polare $\theta$) 
+\begin{equation}
+    \textbf{r}(t) = (x(t),\,y(t),\,z(t)) \Longleftrightarrow \frac{d\textbf{r}}{dt} = (x'(t),\,y'(t),\,z'(t)) \Longrightarrow d\textbf{r} = (x'(t),\,y'(t),\,z'(t)) \, dt
+\end{equation}
+\subsection{Konservative vektorfelt}
+Et vektorfelt $\textbf{F}$ er konservativt dersom det eksisterer en potensialfunksjon $\Phi$ slik at 
+\begin{equation}
+    \textbf{F} = \nabla \Phi
+\end{equation}
+Ekvivalent er det å si at vektorfeltet er over et enkeltsammenhengende område $D$ med $\operatorname{curl}\,\textbf{F} = \textbf{0}$.
+Konservative vektorfelter har en rekke nyttige egenskaper. 
+\begin{equation}
+    \forall\, C,\text{ med endepunkter } a, \, b, \text{ så er } \int_C \textbf{F} \cdot d\textbf{r} = \Phi (b) - \Phi(a) 
+\end{equation}
+\begin{equation}
+    \forall \, C \text{ gjelder } \oint_C \textbf{F}\cdot d\textbf{r} = 0
+\end{equation}
+\subsection{Divergens}
+La $\textbf{F}: D \to \mathbb{R}^n,\,\, D \subset \mathbb{R}^n$
+\begin{equation}
+    \operatorname{div} \textbf{F} = \nabla \cdot \textbf{F} = \frac{\partial f}{\partial x} + \frac{\partial f}{\partial y} + \frac{\partial f}{\partial z}+ ... + \frac{\partial f}{\partial n}
+\end{equation}
+Divergensen kan tolkes som et mål på flukstetthet.
+\subsection{Curl}
+La $\textbf{F} : D \to \mathbb{R}^3,\, \ D \subset \mathbb{R}^3$, $F = (P(x,y,z),\, Q(x,y,z),\, R(x,y,z))$
+\begin{equation}
+    \operatorname{curl} \textbf{F} = \nabla \times \textbf{F} = 
+    \begin{vmatrix}
+    \textbf{i}&\textbf{j}&\textbf{k}\\
+    \frac{\partial}{\partial x} & \frac{\partial}{ \partial y} & \frac{\partial}{ \partial z} \\
+    P & Q & R
+    \end{vmatrix} = \left(\frac{\partial R}{\partial y} - \frac{\partial Q}{\partial z}, \frac{\partial P}{\partial z} - \frac{\partial R}{\partial x}, \frac{\partial Q}{\partial x} -\frac{\partial P}{\partial y} \right)
+\end{equation}
+Dersom $\textbf{F} : D \to \mathbb{R}^2,\, D \subset \mathbb{R}^2$ kan man se på $\textbf{F}$ som en funksjon i $\mathbb{R}^3$ med $R(x, y) = 0$, slik at når vektorfeltet $\textbf{F}$ er av to dimensjoner, kan $\operatorname{curl} \textbf{F}$ tolkes som
+\begin{equation}
+    \operatorname{curl} \textbf{F}(x,y) = \nabla \times \textbf{F} (x,\,y,\, z = 0) = \left(\frac{\partial Q}{\partial x} -\frac{\partial P}{\partial y} \right) \cdot \textbf{k} = \frac{\partial Q}{\partial x} -\frac{\partial P}{\partial y}
+\end{equation}
+Curlen følger høyrehåndsregelen, og er et mål på rotasjonstetthet.
+\subsection{Vektorpotensialer}
+Dersom et vektorfelt $\textbf{F}$ er divergensfritt på et område $D$ kalles det solenoidalt, og det eksisterer et vektorfelt \textbf{G} slik at 
+\begin{equation}
+    \textbf{F} = \operatorname{curl}\,\textbf{G}
+\end{equation}
+Vektorpotensialer er ikke unike, altså finnes det som regel uendelig mange vektorpotensialer som oppfyller $\textbf{F} = \operatorname{curl} \textbf{G}$. Ved å bruke egenskapene til curl, kan vi derfor forenkle arbeidet med å finne et gyldig vektorpotensial til $\textbf{F}$. \newline Dersom $h$ er en vilkårlig potensialfunksjon, så er
+\begin{equation}
+    \operatorname{curl}(\textbf{G} + \nabla h) = \nabla \times (\textbf{G} +\nabla h) = \nabla \times \textbf{G} + \nabla \times \nabla h = \nabla \times \textbf{G} + 0 = \operatorname{curl} \, \textbf{G} 
+\end{equation}
+Dette betyr at også $\textbf{G} + \nabla h$ er et gyldig vektorpotensial for $\textbf{F}$. Dersom $\textbf{G}=(G_1,\, G_2, \, G_3)$, kan man velge $h$ slik at f. eks. \begin{equation}
+    \nabla h = (0,0,-G_3) \Longrightarrow \textbf{G} + \nabla h = (G_1, G_2, 0),
+\end{equation}
+Ligningen $\textbf{F} = \operatorname{curl} \textbf{G}$ blir dermed mye enklere å løse, siden den nå er på formen
+\begin{equation}
+    F_1 = -\frac{\partial G_2}{\partial z}\\
+    F_2 = \frac{\partial G_1}{\partial z}\\
+    F_3 = \frac{\partial G_2}{\partial x} - \frac{\partial G_1}{\partial y}.
+\end{equation}
+Siden $\nabla h$ er en vilkårlig potensialfunksjon, er det lite som stopper en fra å gjøre tilsvarende for å sette $G_2 = 0$ om dette gjør ligningssettet enklere, men vær obs på at du bør forsikre deg om at en slik $\nabla h$ faktisk eksisterer.
+\subsection{Avklaringer for de påfølgende teoremene}
+De påfølgende teoremene har mange like krav som må oppfylles for at de skal gjelde.  Et område er \textit{regulært} dersom det er \textit{enkelt} i samtlige koordinatretninger. Dersom området ikke er regulært, eks "mangler" punkter gjelder ikke lenger likhetene, så det kan være lurt å forsikre seg om at alle kravene oppfylles. I Adams \& Essex' \textit{Calculus, a complete course} (9. utg.) finner man et stygt eksempel på dette på side 942.
+\subsection{Greens teorem}
+$\textbf{F},\, R$ i to dimensjoner.
+\begin{equation}
+    \oint_{\partial R} \textbf{F}\cdot d\textbf{r} = \iint_R \operatorname{curl} \textbf{F} \, dA
+\end{equation}
+\subsection{Divergensteoremet (Gauss' teorem)}
+La $R$ være et regulært, lukket område med stykkevis glatt rand $\partial R$ orientert i positiv retning i forhold til $R$ (i planet: høyrehåndsregel, i rommet: ut av R). Dersom $\textbf{F}$ er et glatt vektorfelt i området $R$ gjelder følgende teoremer.
+
+\noindent $\textbf{F},\,R$ i to dimensjoner:
+\begin{equation}
+    \oint_{\partial R} \textbf{F} \cdot \hat{\textbf{N}}\, ds = \iint_R \operatorname{div}\textbf{F} \, dA
+\end{equation}
+$\textbf{F},\, R$ i tre dimensjoner:
+\begin{equation}
+    \oiint_{\partial R} \textbf{F} \cdot \hat{\textbf{N}}\, dS = \iiint_R \operatorname{div} \textbf{F} \, dV 
+\end{equation}
+Under er to likeverdige, men sjeldenere formulasjoner av divergensteoremet ($f$ er en arbitrær potensialfunksjon):
+\begin{align}
+    &\iiint_R \operatorname{curl}\textbf{F} \, \ dV = -\oiint_{\partial R} \textbf{F} \times \hat{\textbf{N}}\,\ dS\\
+    &\iiint_R \nabla f\, \ dV = \oiint_{\partial R} f\,\hat{\textbf{N}}\, \ dS
+\end{align}
+\subsection{Stokes' teorem}
+La $S$ være en stykkevis glatt flate i rommet med normalvektor $\hat{\textbf{N}}$ med rand $\partial S$ bestående av stykkevis glatte kurver med orientering arvet fra $\hat{\textbf{N}}$. Dersom vektorfeltet $F$ er glatt i et område som inneholder $S$ gjelder Stokes' teorem:
+\begin{equation}
+    \oint_{\partial S} \textbf{F} \cdot d\textbf{r} = \iint_S \operatorname{curl} \textbf{F} \cdot \hat{\textbf{N}} \, dS
+\end{equation}
+Merk at likheten er uavhengig av flaten, så lenge den har samme rand, som gjør det mulig å regne ut mye vanskeligere flate- eller linjeintegraler. 
+
+\section{Diverse identiteter}
+\subsection{Vektoridentiteter}
+$\phi, \, g$ er potensialfunksjoner.
+\begin{align}
+    &\nabla(g\phi) = \phi \nabla g + g\nabla\phi \, &(\text{Produktregelen})\\
+    &\nabla \times \nabla\phi = \textbf{0} \, &(\text{Curlen til et konservativt vektorfelt er 0})\\
+    &\nabla \cdot(\nabla\times\textbf{F}) = 0 \, &(\text{Divergensen til et solenoidalt vektorfelt er 0 })\\
+    &\nabla \times (\nabla \times \textbf{F}) = \nabla(\nabla \cdot \textbf{F})-\nabla^2\textbf{F}&
+\end{align}
+\subsection{Trigonometriske identiteter}
+Disse er veldig greie å ha når man integrerer og bruker polar- eller kulekoordinater
+\begin{align}
+    & \cos^2{\theta} +\sin^2{\theta}  = 1\\
+    &\tan^2{\theta} + 1 = \sec^2{\theta} = \frac{1}{\cos^2{\theta}}\\
+    &\cos^2{\theta} = \frac{1}{2} + \frac{\cos{2\theta}}{2}\\
+    &\sin^2{\theta} = \frac{1}{2} - \frac{\cos{2\theta}}{2}\\
+    &\sin{2\theta} = 2\sin{\theta}\cos{\theta}\\
+    &\cos{2\theta} = \cos{^2\theta}-\sin^2{\theta}
+\end{align}
+\end{document}
